@@ -54,11 +54,11 @@ export default function Vault() {
       </div>
 
       <div className="grid grid--stats">
-        <StatCard label="Available balance" tone="feature" footer={<PrivacyLine />}>
+        <StatCard label="Compensation received" tone="feature" footer={<PrivacyLine />}>
           {vault.loading && <p className="muted">Checking balance…</p>}
           {vault.error && <p className="small error-text">We could not read your balance right now. {vault.error.message}</p>}
-          {vault.data && <Amount value={vault.data.balance} asset={asset} className="figure" />}
-          {vault.data && asset === 'XLM' && <p className="small">New testnet vaults start with free test funds, so this balance includes them.</p>}
+          {vault.data && <Amount value={vault.data.receivedTotal ?? vault.data.balance} asset={asset} className="figure" />}
+          {vault.data && <p className="small">Total balance {vault.data.balance} {asset}{asset === 'XLM' ? ', including free testnet funds' : ''}.</p>}
         </StatCard>
 
         <StatCard label="Latest compensation" footer={latest && <TxLink href={latest.link}>Confirmed on Stellar</TxLink>}>

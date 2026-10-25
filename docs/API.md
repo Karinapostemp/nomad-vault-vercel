@@ -71,7 +71,7 @@ Contractor:
 
 `GET /api/payroll-runs` → `{ "runs": [PayrollRun] }` newest first.
 
-`POST /api/payroll-runs` body `{}` → creates a `draft` run for the current month with one item per `active` contractor that has a vault. 409 if a run for this period is already executing.
+`POST /api/payroll-runs` body `{}` → if this month already has an unfinished run, returns it (`reused: true`) instead of creating a second one. Otherwise creates a `draft` run with one item per `active` contractor that has a vault and has not already been paid this month. 409 when everyone is already paid or a run is executing.
 
 `GET /api/payroll-runs/:id` → `{ "run": PayrollRun }`
 
@@ -101,6 +101,6 @@ PayrollRun:
 
 ### Contractor vault
 
-`GET /api/vaults/:address` → `{ "address", "exists": true, "balance": "15.50", "asset": "XLM", "payments": [Payment with "fromCompany": "Northstar Labs"] }`
+`GET /api/vaults/:address` → `{ "address", "exists": true, "balance": "15.50", "receivedTotal": "5.50", "asset": "XLM", "payments": [Payment with "fromCompany": "Northstar Labs"] }`
 
 `POST /api/demo/fund-vault` body `{ "address": "G..." }` → funds a new testnet account through friendbot. `{ "funded": true }`.

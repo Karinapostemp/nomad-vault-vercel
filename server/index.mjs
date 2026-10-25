@@ -199,10 +199,17 @@ const routes = [
 
   ['POST', /^\/api\/payroll-runs$/, async () => {
     if (executing.size) fail(409, 'A payroll run is executing. Wait for it to finish.', 'busy');
-    const { items, warnings } = draftItems(allContractors().map((c) => ({ id: c.id, displayName: c.display_name, status: c.status, vaultAddress: c.vault_address, amountMinor: c.amount_minor })));
-    if (!items.length) fail(409, 'No active contractors with a vault to pay yet.', 'nothing_to_pay');
-    const id = newId('run');
     const period = new Date().toISOString().slice(0, 7);
+    // An unfinished run for this month is reopened instead of starting a second one.
+    const open = db.prepare("SELECT * FROM payroll_runs WHERE period = ? AND status NOT IN ('confirmed') ORDER BY created_at DESC LIMIT 1").get(period);
+    if (open) return { run: await runJson(open), reused: true };
+    // Anyone already paid, or waiting for an admin, this month is never drafted again.
+    const covered = new Set(db.prepare(`SELECT pi.contractor_id FROM payroll_items pi JOIN payroll_runs r ON r.id = pi.run_id
+      WHERE r.period = ? AND pi.status IN ('confirmed', 'submitted', 'pending', 'needs_approval')`).all(period).map((r) => r.contractor_id));
+    const candidates = allContractors().filter((c) => !covered.has(c.id));
+    const { items, warnings } = draftItems(candidates.map((c) => ({ id: c.id, displayName: c.display_name, status: c.status, vaultAddress: c.vault_address, amountMinor: c.amount_minor })));
+    if (!items.length) fail(409, covered.size ? 'Everyone active has already been paid this month.' : 'No active contractors with a vault to pay yet.', 'nothing_to_pay');
+    const id = newId('run');
     db.prepare("INSERT INTO payroll_runs (id, period, status, total_minor, warnings, created_at) VALUES (?, ?, 'draft', ?, ?, ?)")
       .run(id, period, sumMinor(items).toString(), JSON.stringify(warnings), now());
     const ins = db.prepare("INSERT INTO payroll_items (id, run_id, contractor_id, amount_minor, status, updated_at) VALUES (?, ?, ?, ?, 'pending', ?)");
@@ -245,8 +252,10 @@ const routes = [
   ['GET', /^\/api\/vaults\/(G[A-Z2-7]{55})$/, async (req, [addr]) => {
     const exists = await accountExists(addr);
     const balance = exists ? await balanceOf(addr) : 0n;
-    const payments = (await treasuryTransfers({ to: addr })).map((p) => ({ ...paymentJson(p), fromCompany: company.name }));
-    return { address: addr, exists, balance: formatAmount(balance), asset: cfg.asset.code, payments };
+    const transfers = await treasuryTransfers({ to: addr });
+    const payments = transfers.map((p) => ({ ...paymentJson(p), fromCompany: company.name }));
+    const received = transfers.reduce((a, t) => a + BigInt(t.amountMinor), 0n);
+    return { address: addr, exists, balance: formatAmount(balance), receivedTotal: formatAmount(received), asset: cfg.asset.code, payments };
   }],
 
   ['POST', /^\/api\/demo\/fund-vault$/, async (req) => {

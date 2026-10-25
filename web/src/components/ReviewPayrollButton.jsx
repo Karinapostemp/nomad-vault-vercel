@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { endpoints } from '../lib/api.js';
 
-const OPEN = ['draft', 'awaiting_approval', 'approved', 'executing'];
+const OPEN = ['draft', 'awaiting_approval', 'approved', 'executing', 'needs_approval', 'partially_confirmed', 'failed'];
 
 // Primary CTA. Reuses an open run for review if one exists, otherwise prepares a new draft run.
 export default function ReviewPayrollButton({ runs = [], label = 'Review payroll' }) {
