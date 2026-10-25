@@ -27,6 +27,8 @@ export async function api(path, { method = 'GET', body } = {}) {
     throw new ApiError(FALLBACK[0], 0);
   }
   const data = await res.json().catch(() => null);
+  // A 5xx with no JSON body comes from the dev proxy, not our API: the server is not reachable.
+  if (!res.ok && !data && res.status >= 500) throw new ApiError(FALLBACK[0], res.status);
   if (!res.ok) {
     const message = data?.error || FALLBACK[res.status] || (res.status >= 500 ? FALLBACK[500] : 'The request was not accepted.');
     throw new ApiError(message, res.status, data?.code);

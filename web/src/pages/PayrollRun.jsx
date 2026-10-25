@@ -13,7 +13,7 @@ import { Empty, ErrorState, Loading, Notice } from '../components/States.jsx';
 const POLL_MS = 1500;
 const DEMO_ADMIN = 'Alex';
 const REVIEWABLE = ['draft', 'awaiting_approval'];
-const FINISHED = ['partially_confirmed', 'confirmed', 'failed'];
+const FINISHED = ['needs_approval', 'partially_confirmed', 'confirmed', 'failed'];
 
 export default function PayrollRun() {
   const { id } = useParams();

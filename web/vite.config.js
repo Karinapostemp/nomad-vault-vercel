@@ -6,6 +6,8 @@ const target = process.env.API_URL || 'http://localhost:8787';
 
 export default defineConfig({
   plugins: [react()],
+  // The Stellar SDK (~1 MB) is loaded lazily, only when a contractor creates a vault.
+  build: { chunkSizeWarningLimit: 1100 },
   server: {
     port: 5173,
     strictPort: true,

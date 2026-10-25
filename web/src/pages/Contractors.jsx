@@ -91,8 +91,10 @@ export default function Contractors() {
                 <td data-label="Compensation" className="align-end"><Amount value={c.amount} asset={c.asset} /></td>
                 <td data-label="Frequency">{frequency(c.frequency)}</td>
                 <td data-label="Vault">
-                  <StatusBadge kind="contractor" value={c.status} />
-                  {c.vaultShort && <span className="small muted block num">{c.vaultShort}</span>}
+                  <span>
+                    <StatusBadge kind="contractor" value={c.status} />
+                    {c.vaultShort && <span className="small muted block num">{c.vaultShort}</span>}
+                  </span>
                 </td>
                 <td data-label="Next payment">{c.status === 'active' ? day(c.nextPaymentDate) : '—'}</td>
                 <td className="align-end">

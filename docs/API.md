@@ -9,7 +9,8 @@ The backend stores product metadata only. It holds one policy-limited payroll op
 ## Status vocabularies
 
 - Contractor `status`: `invited` | `active` | `paused` | `ended`
-- Payroll run `status`: `draft` | `awaiting_approval` | `approved` | `executing` | `partially_confirmed` | `confirmed` | `failed`
+- Payroll run `status`: `draft` | `awaiting_approval` | `approved` | `executing` | `needs_approval` | `partially_confirmed` | `confirmed` | `failed`
+  - Run `needs_approval` = nothing failed, but at least one payment waits for an admin because the daily limit was reached.
 - Payroll item `status`: `pending` | `submitted` | `confirmed` | `failed` | `needs_approval`
   - `needs_approval` = the treasury's on-chain spending policy refused the operator (daily limit reached). An admin must approve it.
 - Payroll item `steps`: ordered list for the progress UI, each `{ "key": "policy" | "submitted" | "confirmed", "label": string, "state": "todo" | "active" | "done" | "error" }`

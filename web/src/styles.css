@@ -144,7 +144,8 @@ p:last-child { margin-bottom: 0; }
 .badge--attention { background: var(--highlight); color: var(--ink); }
 .badge--negative { background: var(--ink); color: var(--highlight); }
 .badge--muted { background: transparent; color: var(--ink-muted); border-color: var(--line); }
-.card--feature .badge--attention { border-color: var(--ink); }
+.card--feature .badge--attention, .card--attention .badge--attention { border-color: var(--ink); }
+.option--selected .badge--info { background: var(--surface); }
 
 /* ---------- Lists and tables ---------- */
 .list { list-style: none; margin: 0; padding: 0; }
@@ -213,7 +214,8 @@ p:last-child { margin-bottom: 0; }
 .hero .actions { margin-top: 24px; }
 .steps-grid { list-style: none; margin: 32px 0 24px; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .step-number { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: 20px; margin-bottom: 16px; }
-.actions--vault .btn { flex: 1 1 120px; }
+.actions--vault { flex-wrap: nowrap; }
+.actions--vault .btn { flex: 1 1 0; min-width: 0; padding-left: 8px; padding-right: 8px; }
 
 /* ---------- Small screens (down to 390px) ---------- */
 @media (max-width: 720px) {
@@ -222,11 +224,13 @@ p:last-child { margin-bottom: 0; }
   .cta .error-text { text-align: left; }
   .page-head > .cta .btn, .page-head > .btn { width: 100%; }
   .header-end { margin-left: 0; width: 100%; justify-content: space-between; }
-  .role-switcher .select { max-width: 200px; }
+  .role-switcher { flex: 1; justify-content: flex-end; }
+  .role-switcher-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .role-switcher .select { max-width: 240px; }
   .grid--two { grid-template-columns: 1fr; }
   .summary div { grid-template-columns: 1fr; gap: 2px; }
   .list-row { grid-template-columns: 1fr auto; }
-  .list-row > :nth-child(3) { grid-column: 1 / -1; }
+  .list-row > :nth-child(3) { grid-column: 1 / -1; justify-self: start; }
   .payment-main { grid-template-columns: 1fr auto; }
   .payment-main > .badge { grid-column: 1 / -1; justify-self: start; }
   .action-bar .btn { width: 100%; }

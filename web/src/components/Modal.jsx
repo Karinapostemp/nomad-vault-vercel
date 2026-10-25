@@ -7,7 +7,10 @@ export default function Modal({ open, title, onClose, children }) {
 
   useEffect(() => {
     const dialog = ref.current;
-    if (open && !dialog.open) dialog.showModal();
+    if (open && !dialog.open) {
+      dialog.showModal();
+      dialog.querySelector('.modal-body :is(input, select, textarea):not([disabled])')?.focus();
+    }
     if (!open && dialog.open) dialog.close();
   }, [open]);
 

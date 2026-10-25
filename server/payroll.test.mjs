@@ -35,7 +35,8 @@ test('draftItems pays active contractors with vaults and warns about the rest', 
 test('run status follows item outcomes', () => {
   assert.equal(runStatusFromItems([{ status: 'confirmed' }, { status: 'submitted' }]), 'executing');
   assert.equal(runStatusFromItems([{ status: 'confirmed' }, { status: 'confirmed' }]), 'confirmed');
-  assert.equal(runStatusFromItems([{ status: 'confirmed' }, { status: 'needs_approval' }]), 'partially_confirmed');
+  assert.equal(runStatusFromItems([{ status: 'confirmed' }, { status: 'needs_approval' }]), 'needs_approval');
+  assert.equal(runStatusFromItems([{ status: 'confirmed' }, { status: 'failed' }, { status: 'needs_approval' }]), 'partially_confirmed');
   assert.equal(runStatusFromItems([{ status: 'failed' }, { status: 'needs_approval' }]), 'failed');
 });
 

@@ -45,6 +45,8 @@ export function runStatusFromItems(items) {
   if (statuses.some((s) => s === 'pending' || s === 'submitted')) return 'executing';
   const confirmed = statuses.filter((s) => s === 'confirmed').length;
   if (confirmed === items.length) return 'confirmed';
+  // Only admin approvals left: nothing failed, the policy just paused the rest.
+  if (!statuses.includes('failed')) return 'needs_approval';
   return confirmed > 0 ? 'partially_confirmed' : 'failed';
 }
 
