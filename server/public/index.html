@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nomad Vault status</title>
+<link rel="stylesheet" href="/tokens.css">
+<style>
+  :root { --ink:var(--nv-charcoal); --muted:#5f5f5f; --line:#e6e6dd; --bg:var(--nv-off-white); --accent:var(--nv-cobalt); }
+  body { margin:0; font:400 16px/150% var(--nv-font-body); color:var(--ink); background:var(--bg); }
+  main { max-width:960px; margin:0 auto; padding:32px 16px 48px; }
+  h1 { font:900 44px/105% var(--nv-font-display); margin:0 0 8px; }
+  .sub { color:var(--muted); margin:0 0 24px; font-size:14px; line-height:145%; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:24px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .card.hero { background:var(--nv-cobalt); color:#fff; border-color:var(--nv-cobalt); } .card.hero .label { color:var(--nv-light-blue); }
+  .label { color:var(--muted); font-size:14px; line-height:145%; }
+  .big { font:900 28px/110% var(--nv-font-display); margin-top:6px; font-variant-numeric:tabular-nums; }
+  .bar { height:10px; background:var(--nv-light-blue); border-radius:5px; margin:10px 0 6px; overflow:hidden; } .bar > i { display:block; height:100%; background:var(--nv-cobalt); }
+  h2 { font:900 28px/110% var(--nv-font-display); margin:32px 0 12px; }
+  table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  th, td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; }
+  th { color:var(--ink); background:var(--nv-light-blue); font-weight:700; font-size:14px; }
+  a { color:var(--nv-cobalt); } .ok { color:var(--nv-cobalt); font-weight:700; }
+  .warn { background:var(--nv-yellow); color:var(--nv-charcoal); padding:8px 12px; border-radius:8px; display:inline-block; }
+  .note { color:var(--muted); font-size:14px; line-height:145%; }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title">Nomad Vault</h1>
+  <p class="sub" id="subtitle">Loading testnet state…</p>
+  <div class="grid" id="stats"></div>
+  <h2>Contractors</h2>
+  <table><thead><tr><th>Name</th><th>Location</th><th>Monthly</th><th>Vault</th><th>Status</th></tr></thead><tbody id="contractors"></tbody></table>
+  <h2>Recent treasury payments</h2>
+  <table><thead><tr><th>When (UTC)</th><th>To</th><th>Amount</th><th>Transaction</th></tr></thead><tbody id="payments"></tbody></table>
+  <h2>Private payments</h2>
+  <div class="card" id="private"></div>
+  <p class="note">Developer status page, refreshed every 15 seconds. Stellar testnet only. The product UI comes from the design team.</p>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+async function load() {
+  try {
+    const d = await (await fetch('/api/dashboard')).json();
+    if (d.error) throw new Error(d.error);
+    const p = d.payrollPolicy, used = Math.min(100, 100 * Number(p.spentInWindow) / Number(p.dailyLimit));
+    $('title').textContent = d.company.name + ' · treasury';
+    $('subtitle').innerHTML = `Stellar ${esc(d.network)} · ledger ${d.latestLedger} · <a href="${esc(d.treasury.link)}" target="_blank">treasury contract</a>`;
+    $('stats').innerHTML = `
+      <div class="card hero"><div class="label">Treasury balance</div><div class="big">${esc(d.treasury.balance)} ${esc(d.asset)}</div></div>
+      <div class="card"><div class="label">Next payroll</div><div class="big">${esc(d.nextPayroll.total)} ${esc(d.asset)}</div>
+        <div class="${d.nextPayroll.funded ? 'ok' : 'warn'}">${d.nextPayroll.funded ? 'Treasury funded' : 'Needs funding'}</div></div>
+      <div class="card"><div class="label">Payroll operator limit (${esc(p.rule)}, per ~day)</div>
+        <div class="big">${esc(p.spentInWindow)} / ${esc(p.dailyLimit)}</div><div class="bar"><i style="width:${used}%"></i></div>
+        <div class="label">${esc(p.remaining)} ${esc(d.asset)} left · rule expires in ~${Math.round((p.ledgersLeft || 0) / 17280)} days</div></div>`;
+    $('contractors').innerHTML = d.contractors.map((c) =>
+      `<tr><td>${esc(c.displayName)}</td><td>${esc(c.countryLabel)}</td><td>${esc(c.amount)} ${esc(d.asset)}</td><td>${esc(c.vaultShort || "not yet")}</td><td>${esc(c.status)}</td></tr>`).join('');
+    $('payments').innerHTML = d.recentPayments.length ? d.recentPayments.map((t) =>
+      `<tr><td>${esc(t.at.replace('T', ' ').slice(0, 16))}</td><td>${esc(t.toName || t.to.slice(0, 6) + '…')}</td><td>${esc(t.amount)} ${esc(d.asset)}</td><td><a href="${esc(t.link)}" target="_blank">${esc(t.tx.slice(0, 10))}…</a></td></tr>`).join('')
+      : '<tr><td colspan="4">No payments yet</td></tr>';
+    $('private').innerHTML = `<div class="label">Private payments</div>
+      <p>${d.privatePayments.registrations.map((r) => `${esc(r.who)} registered: <a href="${esc(r.link)}" target="_blank">${esc(r.tx.slice(0, 10))}…</a>`).join('<br>')}</p>
+      <p class="warn">${esc(d.privatePayments.status)}</p>`;
+  } catch (e) { $('subtitle').textContent = 'Could not load: ' + e.message; }
+}
+load(); setInterval(load, 15000);
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+  maya> ready
+  maya> Failed to load resource: the server responded with a status of 404 (Not Found)
+  maya> [2026-10-25T16:49:51.884Z] [INFO] SDK telemetry initialized
+  maya> [2026-10-25T16:49:51.986Z] [INFO] SDK telemetry initialized
+  maya> [2026-10-25T16:49:52.051Z] [INFO] SDK telemetry initialized
+  maya> bootnodeRequired false
+  maya> [2026-10-25T16:49:52.937Z] [INFO] SDK telemetry initialized
+  maya> syncing
+  maya> [2026-10-25T16:49:55.975Z] [INFO] [INDEXER] synced to ledger 5384681
+  maya> [2026-10-25T16:49:57.497Z] [INFO] [INDEXER] synced to ledger 5384682
+  maya> account GCXG5QK5XSPCIQW2D3LDJ3IEJHJ7JFUV3T3PH6URRUCBXO3657LASJR3 registered false
+[maya] open: "GCXG5QK5XSPCIQW2D3LDJ3IEJHJ7JFUV3T3PH6URRUCBXO3657LASJR3"
+  maya> [2026-10-25T16:49:58.346Z] [INFO] [INDEXER] synced to ledger 5384682
+FAILED prepare register: minResourceFee plus the rent margin does not fit into u32

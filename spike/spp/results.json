@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-10-25T16:44:27.693Z",
+  "steps": [
+    {
+      "role": "maya",
+      "name": "open",
+      "value": "GCXG5QK5XSPCIQW2D3LDJ3IEJHJ7JFUV3T3PH6URRUCBXO3657LASJR3"
+    }
+  ],
+  "ok": false,
+  "error": "prepare register: minResourceFee plus the rent margin does not fit into u32",
+  "finishedAt": "2026-10-25T16:44:36.580Z"
+}

@@ -1,0 +1,12 @@
+node_modules/
+.profiles/
+.env
+.env.*
+!.env.example
+*.local.json
+dist/
+spike/spp/vendor-sdk/
+spike/spp/public/deployments.json
+*.db
+*.db-*
+.DS_Store

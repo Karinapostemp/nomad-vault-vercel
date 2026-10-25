@@ -1,0 +1,21 @@
+/* Nomad Vault design tokens, from the design team's "Frame 11" sheet (colours + typography). */
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;700&display=swap');
+
+:root {
+  --nv-yellow: #FFE551;
+  --nv-cobalt: #3155E7;          /* Electric Cobalt */
+  --nv-off-white: #F8F8F2;
+  --nv-charcoal: #252525;
+  --nv-light-blue: #DCE5FF;
+
+  --nv-font-display: 'Archivo Black', system-ui, sans-serif;
+  --nv-font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+.nv-h1 { font: 900 64px/100% var(--nv-font-display); }
+.nv-h2 { font: 900 44px/105% var(--nv-font-display); }
+.nv-h3 { font: 900 28px/110% var(--nv-font-display); }
+.nv-body-lg { font: 400 18px/150% var(--nv-font-body); }
+.nv-body { font: 400 16px/150% var(--nv-font-body); }
+.nv-small { font: 400 14px/145% var(--nv-font-body); }
+.nv-button { font: 700 16px/100% var(--nv-font-body); }

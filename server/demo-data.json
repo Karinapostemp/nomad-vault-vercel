@@ -1,0 +1,64 @@
+{
+  "company": {
+    "id": "northstar",
+    "name": "Northstar Labs",
+    "settlementAsset": "XLM (testnet stand-in for EURC)",
+    "payrollDate": "2026-10-28"
+  },
+  "contractors": [
+    {
+      "id": "ctr_maya",
+      "displayName": "Maya Silva",
+      "email": "maya@example.com",
+      "countryLabel": "Portugal",
+      "amountMinor": "55000000",
+      "frequency": "monthly",
+      "status": "active",
+      "address": "GCXG5QK5XSPCIQW2D3LDJ3IEJHJ7JFUV3T3PH6URRUCBXO3657LASJR3",
+      "nextPaymentDate": "2026-10-28"
+    },
+    {
+      "id": "ctr_mateo",
+      "displayName": "Mateo Alvarez",
+      "email": "mateo@example.com",
+      "countryLabel": "Argentina",
+      "amountMinor": "42000000",
+      "frequency": "monthly",
+      "status": "active",
+      "address": "GDUXYP3FXU4TN6Z27ZIQBBP3SIAXE5H5JYTE2GXDGE2VB3IWRR5HWKVR",
+      "nextPaymentDate": "2026-10-28"
+    },
+    {
+      "id": "ctr_jonas",
+      "displayName": "Jonas Weber",
+      "email": "jonas@example.com",
+      "countryLabel": "Germany",
+      "amountMinor": "38000000",
+      "frequency": "monthly",
+      "status": "active",
+      "address": "GDCM2KIZBRXUQJTJN4OFIPTG72XXF53BIGBABGKHRXJUMGP55WYKQHJD",
+      "nextPaymentDate": "2026-10-28"
+    },
+    {
+      "id": "ctr_nadia",
+      "displayName": "Nadia Chen",
+      "email": "nadia@example.com",
+      "countryLabel": "Singapore",
+      "amountMinor": "48000000",
+      "frequency": "monthly",
+      "status": "invited",
+      "address": null,
+      "nextPaymentDate": "2026-10-28"
+    }
+  ],
+  "privateRegistrations": [
+    {
+      "who": "maya",
+      "tx": "c9f615a9a95e538da149dff7f9b3253d9c4cbdadac718d1dbda4a3b58d464951"
+    },
+    {
+      "who": "employer",
+      "tx": "46cf49e7d498fe06f7fe29ada538f5bdd45362c97e6422de2be7238adffb16e6"
+    }
+  ]
+}

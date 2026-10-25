@@ -1,0 +1,25 @@
+{
+  "treasury": "CDOTGUOHQIZMIRA7WEKW4NMXH23LPPTPTOWLP6WA7ZV2AMQDUQRIME6X",
+  "funded": true,
+  "scheme": "legacy",
+  "payrollRule": 1,
+  "lastRun": {
+    "at": "2026-10-25T16:59:32.133Z",
+    "results": {
+      "operatorPays12": {
+        "ok": true,
+        "status": "SUCCESS",
+        "hash": "584b65e59074783a6175d90f69c3db379d160473878aec765ef9b236a4827ec6"
+      },
+      "operatorPays12Again_overLimit": {
+        "ok": false,
+        "error": "Error(Contract, #3221)"
+      },
+      "adminPays12": {
+        "ok": true,
+        "status": "SUCCESS",
+        "hash": "5124673a16da30eb6ab9c5e8070ad9f3e557ef833c98709aa617fb2502876223"
+      }
+    }
+  }
+}

@@ -1,0 +1,170 @@
+==> build contracts
+ℹ️ CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/harshul.bhatt/.cargo/registry/src= SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 STELLAR_CLI_VERSION=28.1.0 cargo rustc --manifest-path=contracts/asp-membership/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+    Finished `release` profile [optimized] target(s) in 0.69s
+ℹ️ Build Summary:
+   Wasm File: target/stellar/asp_membership.wasm (22326 bytes optimized (original size was 25139 bytes))
+   Wasm Hash: 738c6d0746a3d6c6a3e32312776ef453eb0e1ae0034db8cf7d88c7da2a589ea6
+   Wasm Size: 22326 bytes optimized (original size was 25139 bytes)
+   Exported Functions: 10 found
+     • __constructor
+     • accept_admin
+     • cancel_admin_transfer
+     • get_admin
+     • get_pending_admin
+     • get_root
+     • hash_pair
+     • insert_leaf
+     • is_known_root
+     • update_admin
+✅ Build Complete
+
+ℹ️ CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/harshul.bhatt/.cargo/registry/src= SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 STELLAR_CLI_VERSION=28.1.0 cargo rustc --manifest-path=contracts/asp-non-membership/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+    Finished `release` profile [optimized] target(s) in 0.37s
+ℹ️ Build Summary:
+   Wasm File: target/stellar/asp_non_membership.wasm (39909 bytes optimized (original size was 45765 bytes))
+   Wasm Hash: 8011a585cd2eaa52620b53c23cdaff202c6347f5e14d25fcda50b39eb447f975
+   Wasm Size: 39909 bytes optimized (original size was 45765 bytes)
+   Exported Functions: 12 found
+     • __constructor
+     • accept_admin
+     • cancel_admin_transfer
+     • delete_leaf
+     • find_key
+     • get_admin
+     • get_pending_admin
+     • get_root
+     • insert_leaf
+     • insert_leaves
+     • update_admin
+     • verify_non_membership
+✅ Build Complete
+
+ℹ️ CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/harshul.bhatt/.cargo/registry/src= SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 STELLAR_CLI_VERSION=28.1.0 cargo rustc --manifest-path=contracts/public-key-registry/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+    Finished `release` profile [optimized] target(s) in 0.36s
+ℹ️ Build Summary:
+   Wasm File: target/stellar/public_key_registry.wasm (3202 bytes optimized (original size was 3521 bytes))
+   Wasm Hash: 76ddee6754ff476c2468e60c307764491feef850bd18ea32d953de6f511f982d
+   Wasm Size: 3202 bytes optimized (original size was 3521 bytes)
+   Exported Functions: 3 found
+     • __constructor
+     • get_kdf_domain
+     • register
+✅ Build Complete
+
+ℹ️ CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/harshul.bhatt/.cargo/registry/src= SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 STELLAR_CLI_VERSION=28.1.0 cargo rustc --manifest-path=contracts/pool/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+    Finished `release` profile [optimized] target(s) in 0.41s
+ℹ️ Build Summary:
+   Wasm File: target/stellar/pool.wasm (36828 bytes optimized (original size was 42088 bytes))
+   Wasm Hash: 1f88bc4d396d8b73cc563c059549fbba2033bdd42ab441891b30d856b02bf2b1
+   Wasm Size: 36828 bytes optimized (original size was 42088 bytes)
+   Exported Functions: 20 found
+     • __constructor
+     • accept_admin
+     • cancel_admin_transfer
+     • deposits_paused
+     • get_admin
+     • get_asp_membership_root
+     • get_asp_non_membership_root
+     • get_asp_wasm_hashes
+     • get_kdf_domain
+     • get_pending_admin
+     • get_policy_flags
+     • get_root
+     • is_known_root
+     • is_spent
+     • pause_deposits
+     • transact
+     • unpause_deposits
+     • update_admin
+     • update_asp_membership
+     • update_asp_non_membership
+✅ Build Complete
+
+==> building verifier WASM for B from /Users/harshul.bhatt/Documents/Claude/Projects/HarshOS/workbench/career/2026-10-25-hackmeridian-lisbon/vendor/spp-v020/deployments/futurenet/circuit_keys/policy_tx_2_2_B_vk.json
+==> embedding VK from: /Users/harshul.bhatt/Documents/Claude/Projects/HarshOS/workbench/career/2026-10-25-hackmeridian-lisbon/vendor/spp-v020/deployments/futurenet/circuit_keys/policy_tx_2_2_B_vk.json
+==> building circom-groth16-verifier (release)
+ℹ️ CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/harshul.bhatt/.cargo/registry/src= SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 STELLAR_CLI_VERSION=28.1.0 cargo rustc --manifest-path=contracts/circom-groth16-verifier/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+   Compiling circom-groth16-verifier v0.1.0 (/Users/harshul.bhatt/Documents/Claude/Projects/HarshOS/workbench/career/2026-10-25-hackmeridian-lisbon/vendor/spp-v020/contracts/circom-groth16-verifier)
+    Finished `release` profile [optimized] target(s) in 2.53s
+ℹ️ Build Summary:
+   Wasm File: target/stellar/circom_groth16_verifier.wasm (4646 bytes optimized (original size was 5063 bytes))
+   Wasm Hash: ac1c1a38199f5bfdbd4a56109ebdc99977d11343198b0ee511d3eca24ef15ace
+   Wasm Size: 4646 bytes optimized (original size was 5063 bytes)
+   Exported Functions: 1 found
+     • verify
+✅ Build Complete
+
+==> done: /Users/harshul.bhatt/Documents/Claude/Projects/HarshOS/workbench/career/2026-10-25-hackmeridian-lisbon/vendor/spp-v020/target/stellar/circom_groth16_verifier_B.wasm (    4646 bytes)
+==> deploy with: deployments/scripts/deploy.sh <network> --deployer <identity> ...
+==> deploy asp-membership
+==> deploy asp-non-membership
+==> deploy circom-groth16-verifier (B)
+==> deploy public-key-registry
+==> deploy pool (B, gvk=off) for spec 'native:CB64D3G7SM2RTH6JSGG34DDTFTQ5CFDKVDZJZSODMCX4NJ2HV2KN7OHT'
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                    ✅ DEPLOYMENT SUCCESSFUL                      │
+  └─────────────────────────────────────────────────────────────────┘
+
+Deployment complete
+  Network:             futurenet
+  Deployer:            GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY
+  Admin:               GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY
+  KDF domain:          NomadVault
+  ASP membership:      CAUSSZQQF3FZDTEVZKSFYPHQBDETPWEYHPQMEX76ODULBRBTJXZ4GFZD
+  ASP non-membership:  CBTXYR4WY7SVWQCB4FO3TSSB6BG7X3TI3F4B2CAALJSKQUVEZETJHNRG
+  Public key registry: CASERIUJCPAEROSYZTYJ3E6P7ZFZOC2URNZ5LPZ2F6XG2ZCLCVI7UWLK
+  Pools deployed:      1
+  Constructed:         yes
+  Verifier (B):     CCAJIIQHYQE53XHVZV5U7Z2VA5TRXI7MJA7IUYBGPD2CKKCYWLTAACKZ
+  Pool[0] (B/off):   CD6BKKPA57VKLF5C3G34C573V4DUW2BUAURRDOGNXXM25LU43BT6QDKJ
+{
+  "network": "futurenet",
+  "kdf_domain": "NomadVault",
+  "deployer": "GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY",
+  "admin": "GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY",
+  "asp_membership": "CAUSSZQQF3FZDTEVZKSFYPHQBDETPWEYHPQMEX76ODULBRBTJXZ4GFZD",
+  "added_asp_memberships": [],
+  "asp_non_membership": "CBTXYR4WY7SVWQCB4FO3TSSB6BG7X3TI3F4B2CAALJSKQUVEZETJHNRG",
+  "asp_membership_wasm_hash": "738c6d0746a3d6c6a3e32312776ef453eb0e1ae0034db8cf7d88c7da2a589ea6",
+  "asp_non_membership_wasm_hash": "8011a585cd2eaa52620b53c23cdaff202c6347f5e14d25fcda50b39eb447f975",
+  "verifiers": {
+    "B": "CCAJIIQHYQE53XHVZV5U7Z2VA5TRXI7MJA7IUYBGPD2CKKCYWLTAACKZ"
+  },
+  "public_key_registry": "CASERIUJCPAEROSYZTYJ3E6P7ZFZOC2URNZ5LPZ2F6XG2ZCLCVI7UWLK",
+  "pools": [
+    {
+      "poolContractId": "CD6BKKPA57VKLF5C3G34C573V4DUW2BUAURRDOGNXXM25LU43BT6QDKJ",
+      "tokenContractId": "CB64D3G7SM2RTH6JSGG34DDTFTQ5CFDKVDZJZSODMCX4NJ2HV2KN7OHT",
+      "deploymentLedger": 1265434,
+      "enabled": true,
+      "policyFlags": [
+        "blocklist"
+      ],
+      "asset": {
+        "kind": "native"
+      }
+    }
+  ],
+  "rpcUrl": "https://rpc-futurenet.stellar.org/",
+  "networkPassphrase": "Test SDF Future Network ; October 2022"
+}
+==> verify the deployment against its manifest
+==> checking the admin of every contract in /Users/harshul.bhatt/Documents/Claude/Projects/HarshOS/workbench/career/2026-10-25-hackmeridian-lisbon/vendor/spp-v020/deployments/futurenet/deployments.json
+ok CD6BKKPA57VKLF5C3G34C573V4DUW2BUAURRDOGNXXM25LU43BT6QDKJ Admin
+ok CD6BKKPA57VKLF5C3G34C573V4DUW2BUAURRDOGNXXM25LU43BT6QDKJ PendingAdmin
+ok CAUSSZQQF3FZDTEVZKSFYPHQBDETPWEYHPQMEX76ODULBRBTJXZ4GFZD Admin
+ok CAUSSZQQF3FZDTEVZKSFYPHQBDETPWEYHPQMEX76ODULBRBTJXZ4GFZD PendingAdmin
+ok CBTXYR4WY7SVWQCB4FO3TSSB6BG7X3TI3F4B2CAALJSKQUVEZETJHNRG Admin
+ok CBTXYR4WY7SVWQCB4FO3TSSB6BG7X3TI3F4B2CAALJSKQUVEZETJHNRG PendingAdmin
+==> counting the contracts clients index
+ok manifest indexed contracts
+==> checking the token and trees of every pool
+ok CD6BKKPA57VKLF5C3G34C573V4DUW2BUAURRDOGNXXM25LU43BT6QDKJ Token
+ok CD6BKKPA57VKLF5C3G34C573V4DUW2BUAURRDOGNXXM25LU43BT6QDKJ get_asp_wasm_hashes
+ok CD6BKKPA57VKLF5C3G34C573V4DUW2BUAURRDOGNXXM25LU43BT6QDKJ ASPMembership
+==> checking the custody of the admin account
+notice GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY master weight: expected 0, got 1
+ok GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY thresholds
+ok GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY signers
+notice GA3NTZUQTEG7JEAQJTBSANRWWT5JY7KHIAFDMJ6WD4MLQVNFBV2MFVYY threshold: expected at least 2, at most 0 signers, got 0
