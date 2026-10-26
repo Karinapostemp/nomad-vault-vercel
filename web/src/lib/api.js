@@ -22,6 +22,8 @@ const FALLBACK = {
   500: 'Something went wrong on our side.',
 };
 
+const API_ORIGIN = String(import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
 const demoState = {
   contractors: [
     { id: 'ctr_maya', displayName: 'Maya Silva', email: 'maya@example.com', countryLabel: 'Portugal', amount: '550.00', asset: 'XLM', frequency: 'monthly', status: 'active', vaultAddress: 'GCXG5QK5XSPCIQW2D3LDJ3IEJHJ7JFUV3T3PH6URRUCBXO3657LASJR3', vaultShort: 'GCXG…ASJR3', nextPaymentDate: '2026-10-28' },
@@ -32,7 +34,7 @@ const demoState = {
   runs: [],
 };
 
-const hostedDemo = () => typeof window !== 'undefined' && /(?:vercel\.app|now\.sh|tmp\.now)$/.test(window.location.hostname);
+const hostedDemo = () => !API_ORIGIN && typeof window !== 'undefined' && /(?:vercel\.app|now\.sh|tmp\.now)$/.test(window.location.hostname);
 
 function demoApi(path, method, body = {}) {
   if (path === '/dashboard') {
@@ -83,7 +85,7 @@ export async function api(path, { method = 'GET', body } = {}) {
   }
   let res;
   try {
-    res = await fetch(`/api${path}`, init);
+    res = await fetch(`${API_ORIGIN}/api${path}`, init);
   } catch {
     if (hostedDemo()) return demoApi(path, method, body);
     throw new ApiError(FALLBACK[0], 0);
