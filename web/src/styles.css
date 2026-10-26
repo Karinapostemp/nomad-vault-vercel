@@ -53,6 +53,7 @@ p:last-child { margin-bottom: 0; }
 .block { display: block; }
 .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .figure { font-size: 32px; line-height: 110%; display: block; margin: 0 0 8px; font-variant-numeric: tabular-nums; }
+.figure.num { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
 .figure-unit { font: 400 16px/150% var(--nv-font-body); }
 .figure-pair { font-weight: 700; }
 .error-text { color: var(--ink); font-weight: 700; }
