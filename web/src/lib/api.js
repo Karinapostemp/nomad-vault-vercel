@@ -26,10 +26,10 @@ const API_ORIGIN = String(import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 
 const demoState = {
   contractors: [
-    { id: 'ctr_maya', displayName: 'Maya Silva', email: 'maya@example.com', countryLabel: 'Portugal', amount: '550.00', asset: 'XLM', frequency: 'monthly', status: 'active', vaultAddress: 'GCXG5QK5XSPCIQW2D3LDJ3IEJHJ7JFUV3T3PH6URRUCBXO3657LASJR3', vaultShort: 'GCXG…ASJR3', nextPaymentDate: '2026-10-28' },
-    { id: 'ctr_mateo', displayName: 'Mateo Alvarez', email: 'mateo@example.com', countryLabel: 'Argentina', amount: '420.00', asset: 'XLM', frequency: 'monthly', status: 'active', vaultAddress: 'GDUXYP3FXU4TN6Z27ZIQBBP3SIAXE5H5JYTE2GXDGE2VB3IWRR5HWKVR', vaultShort: 'GDUX…WKVR', nextPaymentDate: '2026-10-28' },
-    { id: 'ctr_jonas', displayName: 'Jonas Weber', email: 'jonas@example.com', countryLabel: 'Germany', amount: '380.00', asset: 'XLM', frequency: 'monthly', status: 'active', vaultAddress: 'GDCM2KIZBRXUQJTJN4OFIPTG72XXF53BIGBABGKHRXJUMGP55WYKQHJD', vaultShort: 'GDCM…QHJD', nextPaymentDate: '2026-10-28' },
-    { id: 'ctr_nadia', displayName: 'Nadia Chen', email: 'nadia@example.com', countryLabel: 'Singapore', amount: '480.00', asset: 'XLM', frequency: 'monthly', status: 'invited', vaultAddress: null, vaultShort: null, nextPaymentDate: '2026-10-28' },
+    { id: 'ctr_maya', displayName: 'Maya Silva', email: 'maya@example.com', countryLabel: 'Portugal', amount: '550.00', asset: 'USDC', frequency: 'monthly', status: 'active', vaultAddress: 'GCXG5QK5XSPCIQW2D3LDJ3IEJHJ7JFUV3T3PH6URRUCBXO3657LASJR3', vaultShort: 'GCXG…ASJR3', nextPaymentDate: '2026-10-28' },
+    { id: 'ctr_mateo', displayName: 'Mateo Alvarez', email: 'mateo@example.com', countryLabel: 'Argentina', amount: '420.00', asset: 'USDC', frequency: 'monthly', status: 'active', vaultAddress: 'GDUXYP3FXU4TN6Z27ZIQBBP3SIAXE5H5JYTE2GXDGE2VB3IWRR5HWKVR', vaultShort: 'GDUX…WKVR', nextPaymentDate: '2026-10-28' },
+    { id: 'ctr_jonas', displayName: 'Jonas Weber', email: 'jonas@example.com', countryLabel: 'Germany', amount: '380.00', asset: 'USDC', frequency: 'monthly', status: 'active', vaultAddress: 'GDCM2KIZBRXUQJTJN4OFIPTG72XXF53BIGBABGKHRXJUMGP55WYKQHJD', vaultShort: 'GDCM…QHJD', nextPaymentDate: '2026-10-28' },
+    { id: 'ctr_nadia', displayName: 'Nadia Chen', email: 'nadia@example.com', countryLabel: 'Singapore', amount: '480.00', asset: 'USDC', frequency: 'monthly', status: 'invited', vaultAddress: null, vaultShort: null, nextPaymentDate: '2026-10-28' },
   ],
   runs: [],
 };
@@ -40,7 +40,7 @@ function demoApi(path, method, body = {}) {
   if (path === '/dashboard') {
     const active = demoState.contractors.filter((c) => c.status === 'active' && c.vaultAddress);
     const total = active.reduce((sum, c) => sum + Number(c.amount), 0).toFixed(2);
-    return { company: { id: 'northstar', name: 'Northstar Labs' }, network: 'Stellar Testnet', asset: 'XLM', treasury: { address: 'G...', balance: '12,450.00' }, nextPayroll: { total, contractorCount: active.length, funded: true, date: '2026-10-28' }, payrollPolicy: { dailyLimit: '2,000.00', spentInWindow: '0.00', remaining: '2,000.00', ledgersLeft: 17 }, counts: { active: active.length, invited: demoState.contractors.filter((c) => c.status === 'invited').length, paused: demoState.contractors.filter((c) => c.status === 'paused').length }, recentRuns: demoState.runs, recentPayments: [], privatePayments: { status: 'Demo mode: private transfer integration is not connected on this deployment.', registrations: [] } };
+    return { company: { id: 'northstar', name: 'Northstar Labs' }, network: 'Stellar Testnet', asset: 'USDC', treasury: { address: 'G...', balance: '12,450.00' }, nextPayroll: { total, contractorCount: active.length, funded: true, date: '2026-10-28' }, payrollPolicy: { dailyLimit: '2,000.00', spentInWindow: '0.00', remaining: '2,000.00', ledgersLeft: 17 }, counts: { active: active.length, invited: demoState.contractors.filter((c) => c.status === 'invited').length, paused: demoState.contractors.filter((c) => c.status === 'paused').length }, recentRuns: demoState.runs, recentPayments: [], privatePayments: { status: 'Demo mode: private transfer integration is not connected on this deployment.', registrations: [] } };
   }
   if (path === '/contractors') return { contractors: demoState.contractors };
   const contractorMatch = path.match(/^\/contractors\/([^/]+)$/);
@@ -61,7 +61,7 @@ function demoApi(path, method, body = {}) {
     const active = demoState.contractors.filter((c) => c.status === 'active' && c.vaultAddress);
     if (!active.length) throw new ApiError('No active contractors with a vault to pay yet.', 409, 'nothing_to_pay');
     const totalAmount = active.reduce((sum, c) => sum + Number(c.amount), 0);
-    const run = { id: `run_demo_${Date.now()}`, period: '2026-10', asset: 'XLM', status: 'draft', total: totalAmount.toFixed(2), warnings: [], approvedBy: null, approvedAt: null, createdAt: new Date().toISOString(), treasuryBefore: '12,450.00', treasuryAfter: (12450 - totalAmount).toFixed(2), policy: { dailyLimit: '2,000.00', remaining: '2,000.00', withinLimit: true }, items: active.map((c) => ({ id: `item_${c.id}`, contractorId: c.id, displayName: c.displayName, countryLabel: c.countryLabel, amount: c.amount, status: 'pending', steps: [] })) };
+    const run = { id: `run_demo_${Date.now()}`, period: '2026-10', asset: 'USDC', status: 'draft', total: totalAmount.toFixed(2), warnings: [], approvedBy: null, approvedAt: null, createdAt: new Date().toISOString(), treasuryBefore: '12,450.00', treasuryAfter: (12450 - totalAmount).toFixed(2), policy: { dailyLimit: '2,000.00', remaining: '2,000.00', withinLimit: true }, items: active.map((c) => ({ id: `item_${c.id}`, contractorId: c.id, displayName: c.displayName, countryLabel: c.countryLabel, amount: c.amount, status: 'pending', steps: [] })) };
     demoState.runs.unshift(run);
     return { run };
   }
@@ -73,7 +73,7 @@ function demoApi(path, method, body = {}) {
     if (method === 'POST' && runMatch[2] === 'execute') { run.status = 'confirmed'; run.items.forEach((item) => { item.status = 'confirmed'; }); }
     return { run };
   }
-  if (path.startsWith('/vaults/')) return { address: path.split('/').pop(), exists: true, balance: '0.00', receivedTotal: '0.00', asset: 'XLM', payments: [] };
+  if (path.startsWith('/vaults/')) return { address: path.split('/').pop(), exists: true, balance: '0.00', receivedTotal: '0.00', asset: 'USDC', payments: [] };
   throw new ApiError('This demo action is not available on the hosted preview.', 501, 'demo_unavailable');
 }
 

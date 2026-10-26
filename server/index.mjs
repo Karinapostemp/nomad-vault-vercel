@@ -16,6 +16,9 @@ const allowedOrigins = String(process.env.NV_CORS_ORIGIN || '')
 const demo = JSON.parse(readFileSync(new URL('./demo-data.json', import.meta.url)));
 const company = demo.company;
 const T = cfg.treasury;
+// Product-facing demo denomination. Settlement remains on the configured
+// Stellar testnet asset and is disclosed in the web UI.
+const displayAsset = 'USDC';
 const operator = keypair('nv-operator');
 const feePayer = keypair(T.feePayerAlias);
 const admin = process.env.NV_DEMO_ADMIN === '0' ? null : keypair('nv-admin');
@@ -27,7 +30,7 @@ const fail = (status, message, code = 'bad_request') => { throw new HttpError(st
 const short = (a) => (a ? `${a.slice(0, 4)}…${a.slice(-4)}` : null);
 const contractorJson = (r) => ({
   id: r.id, displayName: r.display_name, email: r.email, countryLabel: r.country_label,
-  amount: formatAmount(r.amount_minor), amountMinor: r.amount_minor, asset: cfg.asset.code, frequency: r.frequency,
+  amount: formatAmount(r.amount_minor), amountMinor: r.amount_minor, asset: displayAsset, frequency: r.frequency,
   status: r.status, vaultAddress: r.vault_address, vaultShort: short(r.vault_address),
   nextPaymentDate: r.next_payment_date, createdAt: r.created_at,
 });
@@ -52,7 +55,7 @@ async function runJson(run, { withChain = true } = {}) {
   const items = runItems(run.id);
   const unpaid = sumMinor(items.filter((i) => i.status !== 'confirmed').map((i) => ({ amountMinor: i.amount_minor })));
   const base = {
-    id: run.id, period: run.period, asset: cfg.asset.code, status: run.status,
+    id: run.id, period: run.period, asset: displayAsset, status: run.status,
     total: formatAmount(run.total_minor), totalMinor: run.total_minor,
     warnings: JSON.parse(run.warnings), approvedBy: run.approved_by, approvedAt: run.approved_at, createdAt: run.created_at,
     items: items.map((i) => itemJson(i, executing.get(run.id))),
@@ -115,7 +118,7 @@ const json = async (req) => {
 
 const routes = [
   ['GET', /^\/api\/network-config$/, async () => ({
-    network: cfg.network, asset: cfg.asset.code, explorer: cfg.explorer, treasury: T.account, privatePool: cfg.privatePayments.pool,
+    network: cfg.network, asset: displayAsset, explorer: cfg.explorer, treasury: T.account, privatePool: cfg.privatePayments.pool,
   })],
 
   ['GET', /^\/api\/dashboard$/, async () => {
@@ -128,7 +131,7 @@ const routes = [
     const runs = db.prepare('SELECT * FROM payroll_runs ORDER BY created_at DESC LIMIT 5').all();
     const remaining = policy.limitMinor - policy.spentMinor;
     return {
-      company: { id: company.id, name: company.name }, network: cfg.network, asset: cfg.asset.code, latestLedger: policy.latest,
+      company: { id: company.id, name: company.name }, network: cfg.network, asset: displayAsset, latestLedger: policy.latest,
       treasury: { address: T.account, link: `${cfg.explorer}/contract/${T.account}`, balance: formatAmount(balance) },
       nextPayroll: { total: formatAmount(next), contractorCount: payable.length, funded: balance >= next, date: company.payrollDate },
       payrollPolicy: {
@@ -259,7 +262,7 @@ const routes = [
     const transfers = await treasuryTransfers({ to: addr });
     const payments = transfers.map((p) => ({ ...paymentJson(p), fromCompany: company.name }));
     const received = transfers.reduce((a, t) => a + BigInt(t.amountMinor), 0n);
-    return { address: addr, exists, balance: formatAmount(balance), receivedTotal: formatAmount(received), asset: cfg.asset.code, payments };
+    return { address: addr, exists, balance: formatAmount(balance), receivedTotal: formatAmount(received), asset: displayAsset, payments };
   }],
 
   ['POST', /^\/api\/demo\/fund-vault$/, async (req) => {

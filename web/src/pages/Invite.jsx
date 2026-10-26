@@ -75,7 +75,7 @@ export default function Invite() {
           <dd>
             <Amount value={contractor.amount} asset={contractor.asset} />, {frequency(contractor.frequency).toLowerCase()}.
             {contractor.nextPaymentDate && <> Next payment expected on {day(contractor.nextPaymentDate)}.</>}
-            {contractor.asset === 'XLM' && <span className="small muted block">The demo pays in testnet XLM as a stand-in for EURC.</span>}
+            {contractor.asset === 'USDC' && <span className="small muted block">USDC amounts are simulated; settlement currently uses Stellar testnet XLM.</span>}
           </dd>
         </div>
         <div>

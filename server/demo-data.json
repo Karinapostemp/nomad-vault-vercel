@@ -2,7 +2,7 @@
   "company": {
     "id": "northstar",
     "name": "Northstar Labs",
-    "settlementAsset": "XLM (testnet stand-in for EURC)",
+    "settlementAsset": "USDC display (settled with testnet XLM)",
     "payrollDate": "2026-10-28"
   },
   "contractors": [
