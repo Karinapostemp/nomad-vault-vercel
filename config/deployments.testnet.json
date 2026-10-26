@@ -9,16 +9,16 @@
     "decimals": 7
   },
   "treasury": {
-    "account": "CDIWIMWDVB3PGBHCSMQVFT7T6NR42C2YEM5WOTPLXKH5T75RD4KISR6D",
+    "account": "CCVNAZBHRAG2C62DUTR2CCZPKORIK33ILZK5OGD6SUJJFVR6TX4DP54B",
     "accountWasmHash": "1b5f4534a76322da2ad7c745f6900857a6802b0ca79850c35a03561df997785a",
     "ed25519Verifier": "CAAVTMCBXEIBPR64EAASKFXERVPYFZA2JYP5A3BG6PESWEFUJX5IHKN4",
     "spendingLimitPolicy": "CABXBYJNZ7IUW4G3D6BND5YCAQF3ASSDMDAOKQQ63UYFSO7WUU2TIP5G",
     "payrollRuleId": 1,
-    "deployedFromLedger": 5385151,
+    "deployedFromLedger": 5389967,
     "feePayerAlias": "nv-employer",
     "spikeAccount": "CDOTGUOHQIZMIRA7WEKW4NMXH23LPPTPTOWLP6WA7ZV2AMQDUQRIME6X",
-    "setupTx": "0ea52da638d254affec3cdb755bf75b8d3ead56feb72e80f03e0cf26ff50dfc9",
-    "dailyLimitMinor": "200000000"
+    "setupTx": "10a8da40f139cd2377ec6b6f1fba82954f4be8d68e9ce092cfdd335fff73c40b",
+    "dailyLimitMinor": "20000000000"
   },
   "privatePayments": {
     "source": "NethermindEth/stellar-private-payments tag cli-v0.2.0 (8e637fe), deployed by us",
