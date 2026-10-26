@@ -32,7 +32,7 @@ export default function Dashboard() {
 
       <div className="grid grid--stats">
         <StatCard label="Treasury balance" footer={<TxLink href={treasury?.link}>View treasury on Stellar</TxLink>}>
-          <Amount value={treasury?.balance} asset={asset} className="figure" />
+          <Amount value={treasury?.balance} asset={asset} className="figure figure--currency" />
         </StatCard>
 
         <StatCard
@@ -40,7 +40,7 @@ export default function Dashboard() {
           tone={nextPayroll?.funded === false ? 'attention' : undefined}
           footer={<>{nextPayroll?.contractorCount ?? '—'} contractors · {day(nextPayroll?.date)}</>}
         >
-          <Amount value={nextPayroll?.total} asset={asset} className="figure" />
+          <Amount value={nextPayroll?.total} asset={asset} className="figure figure--currency" />
           <p>{nextPayroll?.funded ? <Tag tone="positive">Funded</Tag> : <Tag tone="attention">Needs funding</Tag>}</p>
         </StatCard>
 
